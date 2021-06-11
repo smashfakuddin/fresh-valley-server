@@ -23,6 +23,15 @@ client.connect(err => {
             })
     })
 
+    app.post('/addProduct', (req, res) => {
+        const newProduct = req.body;
+        productsCollection.insertOne(newProduct)
+          .then(result => {
+            console.log(result);
+            res.send(result.insertedCount)
+          })
+      })
+
 });
 
 
