@@ -16,7 +16,6 @@ app.use(bodyParser.json());
 const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
 client.connect(err => {
     const productCollection = client.db("freshValley").collection("products");
-    console.log('db connected')
     app.get('/products', (req, res) => {
         productCollection.find({})
             .toArray((err, documents) => {
@@ -38,6 +37,9 @@ client.connect(err => {
             .then((result) => {
                 console.log(result);
             })
+    })
+    app.get('/test',(req,res)=>{
+        res.send('test passed');
     })
 });
 
