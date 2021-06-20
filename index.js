@@ -2,6 +2,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const MongoClient = require('mongodb').MongoClient;
+const ObjectId = require('mongodb').ObjectID;
 require('dotenv').config()
 
 const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@cluster0.di0ox.mongodb.net/${process.env.DB_NAME}?retryWrites=true&w=majority`;
@@ -26,12 +27,18 @@ client.connect(err => {
     app.post('/addProduct', (req, res) => {
         const newProduct = req.body;
         productCollection.insertOne(newProduct)
-          .then(result => {
-            console.log(result);
-            res.send(result.insertedCount)
-          })
-      })
+            .then(result => {
+                console.log(result);
+                res.send(result.insertedCount)
+            })
+    })
 
+    app.delete('/delete/:id', (req, res) => {
+        productCollection.deleteOne({ _id: ObjectId(req.params.id) })
+            .then((result) => {
+                console.log(result);
+            })
+    })
 });
 
 
