@@ -46,7 +46,5 @@ app.get('/', (req, res) => {
     res.send('Hello World!')
 })
 
-app.listen(port, () => {
-    console.log(`I am listening to ${port}`)
-})
+app.listen(process.env.PORT || port)
 
